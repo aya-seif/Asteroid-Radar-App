@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/image"
-                loadImage="@{viewmodel.imageLiveData}"
+                loadImage="@{viewmodel.imageLiveDataDB}"
                 android:src="@drawable/ic_launcher_background" />
 
             <FrameLayout
@@ -48,7 +48,7 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:orientation="vertical"
-            loaddata="@{viewmodel.asteroidLiveData}"
+            loaddata="@{viewmodel.asteroidLiveDataDB}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/asteroid_item"
             android:layout_height="wrap_content" />

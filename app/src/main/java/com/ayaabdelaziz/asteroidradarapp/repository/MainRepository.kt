@@ -1,13 +1,11 @@
 package com.ayaabdelaziz.asteroidradarapp.repository
 
-import android.util.Log
-import androidx.lifecycle.viewModelScope
+
 import com.ayaabdelaziz.asteroidradarapp.pojo.Asteroid
 import com.ayaabdelaziz.asteroidradarapp.remote.RetrofitClient
 import com.ayaabdelaziz.asteroidradarapp.pojo.ImageOfDay
 import com.ayaabdelaziz.asteroidradarapp.utils.Constants
 import com.ayaabdelaziz.asteroidradarapp.utils.parseAsteroidsJsonResult
-import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class MainRepository {
@@ -24,7 +22,6 @@ class MainRepository {
         }
         return imageOfDay!!
     }
-
 
     suspend fun getAsteroids(): ArrayList<Asteroid> {
         var arr: ArrayList<Asteroid> = ArrayList<Asteroid>()

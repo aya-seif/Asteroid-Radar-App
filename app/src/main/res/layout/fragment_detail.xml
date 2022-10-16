@@ -4,6 +4,7 @@
 
 
     <data>
+
         <variable
             name="asteroid"
             type="com.ayaabdelaziz.asteroidradarapp.pojo.Asteroid" />
@@ -19,10 +20,10 @@
 
         <ImageView
             android:id="@+id/isPotentiallyHazardous_img"
-            android:layout_width="wrap_content"
-            android:adjustViewBounds="true"
             isPotentiallyHazardousImg="@{asteroid.component8()}"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:src="@drawable/asteroid_hazardous" />
 
 
@@ -53,23 +54,38 @@
                 android:textSize="18sp" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="Absolute magnitude"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/absolute_magnitude"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_medium"
-                absolute_magnitude_text="@{asteroid.component4()}"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/absolute_magnitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Absolute magnitude"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    absolute_magnitude_text="@{asteroid.component4()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/absolute_magnitude"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/ic_help_circle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_help_circle"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="30dp"/>
+            </RelativeLayout>
 
 
             <TextView
@@ -83,10 +99,10 @@
 
             <TextView
                 android:id="@+id/estmiated_diameter"
+                estimated_diameterTokm="@{asteroid.component5()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                estimated_diameterTokm="@{asteroid.component5()}"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -102,10 +118,10 @@
 
             <TextView
                 android:id="@+id/relative_velocity"
+                relative_velocity="@{asteroid.component6()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                relative_velocity="@{asteroid.component6()}"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -120,10 +136,10 @@
 
             <TextView
                 android:id="@+id/distance_from_earth"
+                absolute_magnitude_text="@{asteroid.component7()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                absolute_magnitude_text="@{asteroid.component7()}"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
