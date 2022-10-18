@@ -2,9 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <data>
-
         <variable
             name="asteroid"
             type="com.ayaabdelaziz.asteroidradarapp.pojo.Asteroid" />
@@ -24,6 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/image"
             android:src="@drawable/asteroid_hazardous" />
 
 
@@ -81,10 +80,10 @@
                     android:id="@+id/ic_help_circle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_help_circle"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="30dp"/>
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="30dp"
+                    android:src="@drawable/ic_help_circle" />
             </RelativeLayout>
 
 

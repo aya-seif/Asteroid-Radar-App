@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewmodel"
             type="com.ayaabdelaziz.asteroidradarapp.viewmodels.MainViewModel" />
@@ -17,12 +19,13 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="230dp">
+
             <ImageView
                 android:id="@+id/image_of_day"
+                loadImage="@{viewmodel.imageLiveDataDB}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/image"
-                loadImage="@{viewmodel.imageLiveDataDB}"
                 android:src="@drawable/ic_launcher_background" />
 
             <FrameLayout
@@ -44,14 +47,15 @@
             </FrameLayout>
 
         </FrameLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
+            loaddata="@{viewmodel.mediatorLiveData}"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            loaddata="@{viewmodel.asteroidLiveDataDB}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/asteroid_item"
-            android:layout_height="wrap_content" />
+            tools:listitem="@layout/asteroid_item" />
 
 
     </LinearLayout>

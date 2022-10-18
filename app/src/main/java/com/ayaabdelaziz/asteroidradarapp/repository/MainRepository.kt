@@ -1,6 +1,9 @@
 package com.ayaabdelaziz.asteroidradarapp.repository
 
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import com.ayaabdelaziz.asteroidradarapp.database.AsteroidDatabase
 import com.ayaabdelaziz.asteroidradarapp.pojo.Asteroid
 import com.ayaabdelaziz.asteroidradarapp.remote.RetrofitClient
 import com.ayaabdelaziz.asteroidradarapp.pojo.ImageOfDay
@@ -8,27 +11,48 @@ import com.ayaabdelaziz.asteroidradarapp.utils.Constants
 import com.ayaabdelaziz.asteroidradarapp.utils.parseAsteroidsJsonResult
 import org.json.JSONObject
 
-class MainRepository {
+class MainRepository(private val database: AsteroidDatabase) {
+
+    private val apiService = RetrofitClient.apiService
+    val asteroidLiveDataDB: LiveData<List<Asteroid>>
+        get() = database.asteroidDao().getAllAsteroids()
+    val asteroidForToday: LiveData<List<Asteroid>>
+        get() = database.asteroidDao().getAsteroidofToday(Constants.getCurrentDate())
+    val asteroidForWeek: LiveData<List<Asteroid>>
+        get() = database.asteroidDao().getAsteroidforWeek()
 
 
-    private val apiService = RetrofitClient.apiService;
-    suspend fun getImageOfDay(): ImageOfDay {
+    private suspend fun getImageOfDay(): ImageOfDay {
         val imageOfDay: ImageOfDay?
         val api = apiService.getImageOfDay(Constants.API_KEY).await()
-        if (api.media_type == "image") {
-            imageOfDay = api
+        imageOfDay = if (api.media_type == "image") {
+            api
         } else {
-            imageOfDay = null
+            null
         }
         return imageOfDay!!
     }
 
-    suspend fun getAsteroids(): ArrayList<Asteroid> {
-        var arr: ArrayList<Asteroid> = ArrayList<Asteroid>()
+    private suspend fun getAsteroids(): ArrayList<Asteroid> {
+        val arr: ArrayList<Asteroid>
         val result = apiService.getAsteroid(Constants.API_KEY)
         val json = JSONObject(result)
         arr = parseAsteroidsJsonResult(json)
         return arr
     }
+
+    suspend fun insertAsteroidsToDatabase() {
+        val data = getAsteroids()
+        database.asteroidDao().insertAllAsteroid(data)
+        Log.d("TAG", "insertAsteroidsToDatabase: saved successfully ")
+    }
+
+    suspend fun insertImageOfDay() {
+        val data = getImageOfDay()
+        database.asteroidDao().insertImageOfDay(data)
+        Log.d("TAG", "insertImageOfDay: saved successfully ")
+
+    }
+
 
 }

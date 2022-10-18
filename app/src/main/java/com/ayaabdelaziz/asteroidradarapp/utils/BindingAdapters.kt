@@ -30,35 +30,41 @@ fun RecyclerView.loaddata(data: List<Asteroid>?) {
 fun ImageView.setIcon(isPotentiallyHazardous: Boolean) {
     if (isPotentiallyHazardous) {
         this.setImageResource(R.drawable.ic_status_potentially_hazardous)
+        this.contentDescription = context.getString(R.string.potentially_hazardous_asteroid_image)
     } else {
         this.setImageResource(R.drawable.ic_status_normal)
-    }
+        this.contentDescription = context.getString(R.string.not_hazardous_asteroid_image)
 
+    }
 }
 
 @BindingAdapter("isPotentiallyHazardousImg")
-fun ImageView.setPropperImg(isPotentiallyHazardous : Boolean){
+fun ImageView.setPropperImg(isPotentiallyHazardous: Boolean) {
     if (isPotentiallyHazardous) {
         this.setImageResource(R.drawable.asteroid_hazardous)
+        this.contentDescription = context.getString(R.string.potentially_hazardous_asteroid_image)
     } else {
         this.setImageResource(R.drawable.asteroid_safe)
+        this.contentDescription = context.getString(R.string.not_hazardous_asteroid_image)
+
     }
 }
 
 @BindingAdapter("absolute_magnitude_text")
-fun TextView.absoluteMagitudeConvert(absolute_magnitude : Double){
+fun TextView.absoluteMagitudeConvert(absolute_magnitude: Double) {
 
-    this.text = String.format(resources.getString(R.string.astronomical_unit_format),absolute_magnitude)
+    this.text =
+        String.format(resources.getString(R.string.astronomical_unit_format), absolute_magnitude)
 }
 
 @BindingAdapter("estimated_diameterTokm")
-fun TextView.estimatedDiameterTokm(estimated : Double){
+fun TextView.estimatedDiameterTokm(estimated: Double) {
 
-    this.text = String.format(resources.getString(R.string.km_unit_format),estimated)
+    this.text = String.format(resources.getString(R.string.km_unit_format), estimated)
 }
 
 @BindingAdapter("relative_velocity")
-fun TextView.relative_velocity(relative_velocity : Double){
-    this.text = String.format(resources.getString(R.string.km_s_unit_format),relative_velocity)
+fun TextView.relative_velocity(relative_velocity: Double) {
+    this.text = String.format(resources.getString(R.string.km_s_unit_format), relative_velocity)
 }
 

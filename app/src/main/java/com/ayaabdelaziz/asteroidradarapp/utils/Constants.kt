@@ -4,6 +4,9 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import androidx.annotation.RequiresApi
+import java.text.SimpleDateFormat
+import java.util.*
 
 object Constants {
     val BASE_URL ="https://api.nasa.gov/"
@@ -40,5 +43,24 @@ object Constants {
         }
     }
 
+
+    fun getCurrentDate():String{
+
+        val formatter = SimpleDateFormat("yyyy-MM-dd")
+        val date = Date()
+        return formatter.format(date)
+
+//        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+//        val currentDate = sdf.format(Date())
+//        return currentDate
+//        val c: Date = Calendar.getInstance().time
+//        val df = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            SimpleDateFormat(API_QUERY_DATE_FORMAT, Locale.getDefault())
+//        } else {
+//            TODO("VERSION.SDK_INT < N")
+//        }
+//        val formattedDate: String = df.format(c)
+//        return formattedDate
+    }
 
 }

@@ -27,4 +27,11 @@ interface AsteroidDao {
     fun getImageOfDay(): LiveData<ImageOfDay>
 
 
+    @Query("SELECT * FROM asteroid WHERE closeApproachData = :date")
+    fun getAsteroidofToday(date : String):LiveData<List<Asteroid>>
+
+    @Query("SELECT * FROM asteroid WHERE closeApproachData >= date() AND closeApproachData <= date('now', '+7 days')")
+    fun getAsteroidforWeek():LiveData<List<Asteroid>>
+
+
 }

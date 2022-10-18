@@ -1,7 +1,9 @@
 package com.ayaabdelaziz.asteroidradarapp.viewmodels
 
 import android.app.Application
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.ayaabdelaziz.asteroidradarapp.database.AsteroidDatabase
 import com.ayaabdelaziz.asteroidradarapp.database.ImageOfTheDay
@@ -16,78 +18,58 @@ import org.json.JSONObject
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
 
-    private var asteroidDao = AsteroidDatabase.getDatabase(application).asteroidDao()
-    lateinit var asteroidLiveDataDB: LiveData<List<Asteroid>>
+    val database = AsteroidDatabase.getDatabase(application)
+    val repository = MainRepository(database)
     lateinit var imageLiveDataDB: LiveData<ImageOfDay>
+    var _asteroidLiveData: LiveData<List<Asteroid>> = repository.asteroidLiveDataDB
+    val asteroidForToday: LiveData<List<Asteroid>> = repository.asteroidForToday
+    val asteroidForWeek: LiveData<List<Asteroid>> = repository.asteroidForWeek
 
+    val mediatorLiveData = MediatorLiveData<List<Asteroid>>()
 
-    //sh3allll
-    private val imageMutableLiveData = MutableLiveData<ImageOfDay>()
-    val imageLiveData: LiveData<ImageOfDay> = imageMutableLiveData
-    private val asteroidMutableLiveData = MutableLiveData<ArrayList<Asteroid>>()
-    val asteroidLiveData: LiveData<ArrayList<Asteroid>> = asteroidMutableLiveData
-    private var mainRepository: MainRepository = MainRepository()
 
     init {
-
-        if(Constants.checkForInternet(application)){
-            insertAsteroidsToDatabase()
-            insertImageOfDay()
-        }
         getImageOfDayFromRoom()
-        getAllAsteroidFromRoom()
-
-    }
-
-    fun getImageOfDay() {
-        viewModelScope.launch {
-            val obj = mainRepository.getImageOfDay()
-            imageMutableLiveData.value = obj
+        mediatorLiveData.addSource(_asteroidLiveData) {
+            mediatorLiveData.value = it
         }
+
     }
 
-    fun getAseroids() {
-        viewModelScope.launch {
-            val response = mainRepository.getAsteroids()
-            if (!response.isNullOrEmpty()){
-                asteroidMutableLiveData.value = response
-            }
-        }
-    }
-
-
-
-    fun insertAsteroidsToDatabase() {
-
-        viewModelScope.launch {
-            val data = mainRepository.getAsteroids()
-            asteroidDao.insertAllAsteroid(data)
-            Log.d("TAG", "insertAsteroidsToDatabase: saved successfully ")
-
-        }
-    }
-    fun insertImageOfDay() {
-        viewModelScope.launch {
-            val data = mainRepository.getImageOfDay()
-            asteroidDao.insertImageOfDay(data)
-            Log.d("TAG", "insertImageOfDay: saved successfully ")
-        }
-    }
-
-    fun getAllAsteroidFromRoom() {
-        viewModelScope.launch {
-            asteroidLiveDataDB = asteroidDao.getAllAsteroids()
-
-        }
-    }
-    fun getImageOfDayFromRoom() {
+    private fun getImageOfDayFromRoom() {
         viewModelScope.launch {
             try {
-                imageLiveDataDB = asteroidDao.getImageOfDay()
+                imageLiveDataDB = database.asteroidDao().getImageOfDay()
             } catch (e: Exception) {
                 Log.d("TAG", "getImageOfDayFromRoom:${e.message.toString()} ")
             }
         }
+    }
+
+    fun displayAsteroidForToday() {
+        mediatorLiveData.removeSource(_asteroidLiveData)
+        mediatorLiveData.addSource(asteroidForToday) {
+            Log.d("TAG", "displayAsteroidForToday:${Constants.getCurrentDate()} ")
+            mediatorLiveData.value = it
+        }
+    }
+
+    fun displaySavedAsteroid() {
+        mediatorLiveData.removeSource(_asteroidLiveData)
+        mediatorLiveData.removeSource(asteroidForToday)
+        mediatorLiveData.addSource(_asteroidLiveData) {
+            mediatorLiveData.value = it
+        }
+    }
+
+    fun displayAsteroidForWeek() {
+        mediatorLiveData.removeSource(_asteroidLiveData)
+        mediatorLiveData.removeSource(asteroidForToday)
+        mediatorLiveData.addSource(asteroidForWeek) {
+            mediatorLiveData.value = it
+        }
 
     }
+
+
 }
