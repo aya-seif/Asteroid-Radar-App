@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="asteroid"
             type="com.ayaabdelaziz.asteroidradarapp.pojo.Asteroid" />
@@ -22,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/image"
+            android:contentDescription="@string/not_hazardous_asteroid_image"
             android:src="@drawable/asteroid_hazardous" />
 
 
@@ -83,6 +84,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="30dp"
+                    android:contentDescription="@string/astronomical_unit_explanation_button"
                     android:src="@drawable/ic_help_circle" />
             </RelativeLayout>
 

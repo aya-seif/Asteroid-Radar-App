@@ -20,10 +20,8 @@ fun ImageView.loadImageUri(imageOfDay: ImageOfDay?) {
 
 @BindingAdapter("loaddata")
 fun RecyclerView.loaddata(data: List<Asteroid>?) {
-
     val adapter = this.adapter as AsteroidAdapter
     adapter.submitList(data)
-
 }
 
 @BindingAdapter("seticon")
@@ -37,6 +35,8 @@ fun ImageView.setIcon(isPotentiallyHazardous: Boolean) {
 
     }
 }
+
+
 
 @BindingAdapter("isPotentiallyHazardousImg")
 fun ImageView.setPropperImg(isPotentiallyHazardous: Boolean) {

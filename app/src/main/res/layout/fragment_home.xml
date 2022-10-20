@@ -25,7 +25,7 @@
                 loadImage="@{viewmodel.imageLiveDataDB}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/image"
+                android:contentDescription="@string/nasa_picture_of_day_content_description_format"
                 android:src="@drawable/ic_launcher_background" />
 
             <FrameLayout
